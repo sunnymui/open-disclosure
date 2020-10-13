@@ -1,27 +1,21 @@
 // Libraries
 import React from "react"
 import { graphql, Link } from "gatsby"
-// Styles
-import styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
-import Button from "../common/button/index"
+// import Button from "../common/button/index"
+import IndexHeader from "../components/indexHeader"
 import MainPageSection from "../components/mainPageSection"
 import MainPagePic from "../components/mainPagePic"
 import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
 import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
-import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from "./../../static/images/Tertiary.png"
 import BlankProfile from "./../../static/images/blankProfile.png"
-import blue from "./../../static/images/blue.png"
-import orange from "./../../static/images/orange.png"
-import green from "./../../static/images/green.png"
-import aboutBlob from "./../../static/images/aboutBlob.png"
 import learnMore from "./../../static/images/learnMore.png"
-import voteBlob from "./../../static/images/voteBlob.png"
 import registerToVote from "./../../static/images/registerToVote.png"
+// Utilities
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 const formatDate = new Intl.DateTimeFormat("en-US", {
@@ -45,30 +39,19 @@ const formatTotalContributions = value => {
   )
 }
 
-const about = {
-  title: "Power to the people",
-  description:
-    "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections.",
-  href: "/aboutUs",
-  linkImg: learnMore,
-  image: aboutBlob,
-}
-
-const vote = {
-  title: "Your voice matters",
-  description:
-    "Register to vote or see if you're already registered in less than two minutes.",
-  href: "/registerToVote",
-  linkImg: registerToVote,
-  image: voteBlob,
-}
-
 export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
-  const currentElection = props.data.allElection.edges[0].node
-  const lastScrape = new Date(
-    props.data.allMetadata.edges[0].node.DateProcessed
-  )
+  const {
+    allElection,
+    allMetadata,
+    btsBlue,
+    btsOrange,
+    btsGreen,
+    aboutBlob,
+    voteBlob,
+  } = props.data
+  const currentElection = allElection.edges[0].node
+  const lastScrape = new Date(allMetadata.edges[0].node.DateProcessed)
   let candidatesRunning = 0
   let candidateList = []
   currentElection.OfficeElections.forEach(election => {
@@ -96,7 +79,7 @@ export default function MainPage(props) {
   const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
   const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`
 
-  const snapshot = {
+  const snapshotItems = {
     title: "San José live election snapshot",
     description: `Source: ${formatDate.format(
       lastScrape
@@ -118,7 +101,7 @@ export default function MainPage(props) {
     renderItem: SnapshotItem,
   }
 
-  const candidates = {
+  const candidateItems = {
     title: "Get the facts before you vote",
     description:
       "Money makes a difference in determining who wins elections.  Find out who's backing local candidates and influencing local government.",
@@ -132,7 +115,7 @@ export default function MainPage(props) {
     ),
   }
 
-  const behindTheScenes = {
+  const behindTheScenesItems = {
     title: "Go behind the scenes",
     description:
       "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
@@ -141,72 +124,60 @@ export default function MainPage(props) {
         title: "Take action on measures",
         description: "Track who opposes or supports upcoming ballot measures.",
         buttonText: "View ballot measures",
-        image: blue,
+        image: btsBlue,
         href: referendumsPageLink,
       },
       {
         title: "Compare local candidates",
         description: "See who’s spending and raising the most.",
         buttonText: "Browse candidates",
-        image: orange,
+        image: btsOrange,
         href: candidatesPageLink,
       },
       {
         title: "Get the finance facts",
         description: "Learn more about campaign finance data.",
         buttonText: "Visit FAQs",
-        image: green,
+        image: btsGreen,
         href: "/faq",
       },
     ],
     renderItem: BehindTheScenesItem,
   }
 
+  const about = {
+    title: "Power to the people",
+    description:
+      "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections.",
+    href: "/aboutUs",
+    linkImg: learnMore,
+    image: { altText: "A crowd of people", ...aboutBlob },
+  }
+
+  const vote = {
+    title: "Your voice matters",
+    description:
+      "Register to vote or see if you're already registered in less than two minutes.",
+    href: "/registerToVote",
+    linkImg: registerToVote,
+    image: { altText: "A ballot", ...voteBlob },
+  }
+
   return (
     <Layout title="Home" windowIsLarge={windowIsLarge}>
-      <div className={styles.container}>
-        <header className={styles.heroOuterContainer}>
-          <div className={styles.heroInnerContainer}>
-            <div className={styles.heroLeft}>
-              <h1>
-                More money,
-                <br />
-                more transparency.
-              </h1>
-              <h2>
-                Keep tabs on the influence of money
-                <br />
-                in local San José elections.
-              </h2>
-              <div className={styles.heroButtonContainer}>
-                <div className={styles.primaryCTA}>
-                  <Button text="Explore candidates" href={candidatesPageLink} />
-                </div>
-                <Button
-                  secondary
-                  text="View measures"
-                  href={referendumsPageLink}
-                />
-              </div>
-            </div>
-            <div className={styles.heroRight}>
-              <div className={styles.imageContainer}>
-                <img
-                  alt="A man and a women walking into San José City Hall"
-                  src={headerBlob}
-                />
-              </div>
-            </div>
-          </div>
-        </header>
+      <div>
+        <IndexHeader
+          candidatesPageLink={candidatesPageLink}
+          referendumsPageLink={referendumsPageLink}
+        />
         <main>
-          <MainPageSection secondary {...snapshot} />
+          <MainPageSection secondary {...snapshotItems} />
           <MainPageSection
-            {...candidates}
+            {...candidateItems}
             offWhite
             windowIsLarge={windowIsLarge}
           />
-          <MainPageSection {...behindTheScenes} />
+          <MainPageSection {...behindTheScenesItems} />
           <MainPagePic {...about} />
           <MainPagePic {...vote} reversed={windowIsLarge} />
         </main>
@@ -217,6 +188,21 @@ export default function MainPage(props) {
 
 export const query = graphql`
   query {
+    btsBlue: file(relativePath: { eq: "bts-blue.png" }) {
+      ...FileImage
+    }
+    btsOrange: file(relativePath: { eq: "bts-orange.png" }) {
+      ...FileImage
+    }
+    btsGreen: file(relativePath: { eq: "bts-green.png" }) {
+      ...FileImage
+    }
+    aboutBlob: file(relativePath: { eq: "aboutBlob.png" }) {
+      ...FileImage
+    }
+    voteBlob: file(relativePath: { eq: "voteBlob.png" }) {
+      ...FileImage
+    }
     allElection {
       edges {
         node {
@@ -258,6 +244,14 @@ export const query = graphql`
         node {
           DateProcessed
         }
+      }
+    }
+  }
+
+  fragment FileImage on File {
+    childImageSharp {
+      fluid(quality: 60) {
+        ...GatsbyImageSharpFluid
       }
     }
   }

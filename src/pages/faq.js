@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from "react"
 import styles from "./faq.module.scss"
 import Layout from "../components/layout"
@@ -17,11 +18,12 @@ const faq = [
         question: "Where does the data come from?",
         answer: () => (
           <p>
-            Candidates are legally required to file campaign finance forms.
-            These forms are then made available by the city of San José at{" "}
-            <a href="https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx">
-              this site
-            </a>
+            Candidates areå legally required to file campaign finance forms.
+            These forms are then made available by the city of San José at
+            {link(
+              "https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx",
+              " this site"
+            )}
             . We collect and aggregate the data from these campaign finance
             forms and make it available to you here.
           </p>
@@ -43,9 +45,10 @@ const faq = [
         answer: () => (
           <p>
             Please submit your data correction request via email to{" "}
-            <a href="mailto:open-disclosure-san-jose@googlegroups.com">
-              open-disclosure-san-jose@googlegroups.com
-            </a>
+            {link(
+              "mailto:open-disclosure-san-jose@googlegroups.com",
+              " open-disclosure-san-jose@googlegroups.com"
+            )}
             .
           </p>
         ),
@@ -96,9 +99,10 @@ const faq = [
             <p>
               In order to give users as much information about the candidate as
               possible, we may link to content created by third parties
-              (including the candidate's website and social media accounts).
-              This information is not created or reviewed by us, and therefore
-              we cannot guarantee that it is completely impartial or factual.
+              (including the candidate&apos;s website and social media
+              accounts). This information is not created or reviewed by us, and
+              therefore we cannot guarantee that it is completely impartial or
+              factual.
             </p>
             <p>
               We are not responsible or liable, directly or indirectly, for any
@@ -118,12 +122,13 @@ const faq = [
         answer: () => (
           <p>
             You can learn more about local candidates via the{" "}
-            <a href="https://www.sccgov.org/sites/rov/Pages/Registrar-of-Voters.aspx">
-              Santa Clara County Registrar of Voters
-            </a>
-            , <a href="https://votersedge.org/ca">Voter's Edge</a>,{" "}
-            <a href="https://ballotpedia.org/">Ballotpedia</a>, or the
-            candidates' own websites and social media.
+            {link(
+              "https://www.sccgov.org/sites/rov/Pages/Registrar-of-Voters.aspx",
+              " Santa Clara County Registrar of Voters"
+            )}
+            , {link("https://votersedge.org/ca", "Voter's Edge")},
+            {link("https://ballotpedia.org/", "Ballotpedia")}, or the
+            candidates&apos; own websites and social media.
           </p>
         ),
       },
@@ -150,11 +155,11 @@ const faq = [
             <p>
               We believe that it is impractical to expect interested voters to
               sift through hundreds of complex PDF and CSV files in order to
-              gain an understanding of a campaign's finances. However, we also
-              believe it is important that voters have this information in order
-              to make informed decisions when they vote. Therefore, our goal is
-              to aggregate and process the information contained in those
-              documents in one place in a user-friendly format.
+              gain an understanding of a campaign&apos;s finances. However, we
+              also believe it is important that voters have this information in
+              order to make informed decisions when they vote. Therefore, our
+              goal is to aggregate and process the information contained in
+              those documents in one place in a user-friendly format.
             </p>
           </>
         ),

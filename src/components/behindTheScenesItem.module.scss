@@ -10,12 +10,6 @@
   max-width: 25%;
   margin: 4rem 1rem 1rem;
 
-  img {
-    height: auto;
-    min-width: 80%;
-    max-width: 100%;
-  }
-
   h3,
   .description {
     text-align: center;
@@ -39,13 +33,6 @@
   .container {
     margin-bottom: 8rem;
     max-width: 100%;
-
-    img {
-      margin-bottom: 2.9rem;
-      min-width: unset;
-      width: 60%;
-      height: auto;
-    }
 
     h3 {
       font-size: 1.8rem;

@@ -4,6 +4,8 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+const path = require(`path`)
+
 module.exports = {
   siteMetadata: {
     title: "Open Disclosure San José",
@@ -17,10 +19,19 @@ module.exports = {
     `gatsby-plugin-eslint`,
     `gatsby-plugin-react-axe`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: "gatsby-source-filesystem",
       options: {
         path: "./src/data",
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "images",
+        path: "./static/images",
       },
     },
     {
